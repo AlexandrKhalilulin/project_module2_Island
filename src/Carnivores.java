@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Carnivores extends Animal {
@@ -14,10 +17,6 @@ public abstract class Carnivores extends Animal {
 
     @Override
     public void eat(Cell cell) {
-        sendСarnivorousToEat(cell);
-    }
-
-    private void sendСarnivorousToEat(Cell cell) {
         List<Animal> animals = new ArrayList<>(cell.getAnimals());
         Collections.shuffle(animals);
         Animal prey;
@@ -25,27 +24,28 @@ public abstract class Carnivores extends Animal {
             prey = animals.stream().filter(s -> mapPreys.keySet().contains(s.getClass())).findAny().get();
             if (this.hunting(prey)) {
                 cell.getAnimals().remove(prey);
+                animals.remove(prey);
+                Collections.shuffle(animals);
                 this.setSatiety(getSatiety() + prey.getWeight());
-                if (getSatiety() > getSatietyLimit()) setSatiety(getSatietyLimit());
-                //System.out.println("Охота прошла успешно");
+                if (getSatiety() > getSatietyLimit()) {
+                    setSatiety(getSatietyLimit());
+                    break;
+                }
             }
         }
     }
 
-
     private boolean hunting(Animal prey) {
         int random = ThreadLocalRandom.current().nextInt(0, 100);
         Integer huntingSuccessRate = mapPreys.get(prey.getClass());
-        if (random <= huntingSuccessRate) return true;
-        return false;
+        return random <= huntingSuccessRate;
     }
 
     public static HashMap<Class, Integer> definePreyMap(String prefix) {
-        HashMap<Class, Integer> hashMap = new HashMap<>();
+        HashMap<Class, Integer> hashMap;
         SettingsReader settingsReader = new SettingsReader();
         hashMap = settingsReader.getPreyMap(prefix);
         return hashMap;
     }
-
 
 }

@@ -61,7 +61,7 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
     @Override
     public HashSet<? extends Entity> reproduce() {
         HashSet<Animal> offspringSet = new HashSet<>();
-        int rand = ThreadLocalRandom.current().nextInt(getMinOffspringSize(), getMaxOffspringSize() + 1);
+        int rand = ThreadLocalRandom.current().nextInt(0, 10);
         AnimalFactory animalFactory = new AnimalFactory();
         for (int i = 0; i < rand; i++) {
             offspringSet.add(animalFactory.createInstance(this.getClass()));
@@ -83,7 +83,7 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
         setMinOffspringSize(Integer.parseInt(settingsReader.getValue(name, "MinOffspringSize")));
         setLivestockSize(Integer.parseInt(settingsReader.getValue(name, "LivestockSize")));
         setTravelSpeed(Integer.parseInt(settingsReader.getValue(name, "TravelSpeed")));
-        setSatietyLimit(Integer.parseInt(settingsReader.getValue(name, "SatietyLimit")));
+        setSatietyLimit(Double.parseDouble(settingsReader.getValue(name, "SatietyLimit")));
         setNumberAttemptsToEat(Integer.parseInt(settingsReader.getValue(name, "NumberAttemptsToEat")));
     }
 

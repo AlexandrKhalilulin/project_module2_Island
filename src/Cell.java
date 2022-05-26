@@ -7,7 +7,7 @@ public class Cell implements Runnable {
     private final int MAX_PLANTS = 200;
     private final int lengthAddress;
     private final int heightAddress;
-    private static int number_each_species = 1;
+    private static int number_each_species = 4;
     private final int SATIETY_REDUCTION_PERCENTAGE = 100;
 
     public Set<Animal> getAnimals() {
@@ -28,15 +28,35 @@ public class Cell implements Runnable {
         resetSatiety();
         growingUpPlants();
         reproducePlantsInCell();
-        sendingAnimalsToEat();
-        reproduceAnimalsInCell();
+        //sendingAnimalsToEat();
+        //reproduceAnimalsInCell();
+
+        animalsCycle();
+    }
+
+    private void animalsCycle() {
+        Set<Animal> offspringSet = new HashSet<>();
+
+        for (Animal animal: animals
+             ) {
+
+            animal.eat(this);
+
+            HashSet<? extends Entity> reproduce = animal.reproduce();
+            offspringSet.addAll((Collection<? extends Animal>) reproduce);
+
+        }
+
+        animals.addAll(offspringSet);
+
     }
 
     private void reproduceAnimalsInCell() {
+       // Set<Animal> offspringSet = animals.stream().flatMap(animal -> ((Collection<? extends Animal>) animal.reproduce()).stream()).collect(Collectors.toSet());
         Set<Animal> offspringSet = new HashSet<>();
-        Iterator<Animal> iterator = animals.iterator();
-        while (iterator.hasNext()){
-            offspringSet.addAll((Collection<? extends Animal>) iterator.next().reproduce());
+        for (Animal animal : animals) {
+            HashSet<? extends Entity> reproduce = animal.reproduce();
+            offspringSet.addAll((Collection<? extends Animal>) reproduce);
         }
 
 
@@ -46,7 +66,9 @@ public class Cell implements Runnable {
     }
 
     private void sendingAnimalsToEat() {
+        System.out.println("start eating");
         animals.forEach(animal -> animal.eat(this));
+        System.out.println("end eating");
     }
 
     private void resetSatiety() {
@@ -56,9 +78,7 @@ public class Cell implements Runnable {
     private void reproducePlantsInCell() {
         HashSet<Plant> newer = plants.stream().map(Plant::reproduce).flatMap(Collection::stream).collect(Collectors.toCollection(HashSet::new));
         Iterator<Plant> iterator = newer.iterator();
-        while (iterator.hasNext() && plants.size() < MAX_PLANTS){
-            plants.add(iterator.next());
-        }
+        while (iterator.hasNext() && plants.size() < MAX_PLANTS) plants.add(iterator.next());
     }
 
 
@@ -74,6 +94,7 @@ public class Cell implements Runnable {
             animals.add(new Wolf());
             animals.add(new Horse());
             animals.add(new Stag());
+            animals.add(new Rabbit());
         }
 
 
@@ -95,5 +116,7 @@ public class Cell implements Runnable {
         System.out.println("Кол-во лошадей в клетке: " + lengthAddress + ":" + heightAddress + " равно " + horses.size());
         HashSet<Animal> stags = (HashSet<Animal>) animals.stream().filter(s -> s instanceof Stag ).collect(Collectors.toSet());
         System.out.println("Кол-во оленей в клетке: " + lengthAddress + ":" + heightAddress + " равно " + stags.size());
+        HashSet<Animal> rabbits = (HashSet<Animal>) animals.stream().filter(s -> s instanceof Rabbit ).collect(Collectors.toSet());
+        System.out.println("Кол-во кроликов в клетке: " + lengthAddress + ":" + heightAddress + " равно " + rabbits.size());
     }
 }
