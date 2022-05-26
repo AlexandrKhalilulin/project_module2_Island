@@ -4,9 +4,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class IslandSimulation {
-    private final int BAR_DURATION = 5000;
+    private final int BAR_DURATION = 2000;
     private final int INITIAL_DELAY_START = 0;
-    private final int PRINT_STEP = 5000;
+    private final int PRINT_STEP = 2000;
 
     public void start() {
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);

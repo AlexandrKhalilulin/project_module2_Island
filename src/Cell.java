@@ -4,10 +4,10 @@ import java.util.stream.Collectors;
 public class Cell implements Runnable {
     private Set<Animal> animals = new HashSet<>();
     private Set<Plant> plants = new HashSet<>();
-    private final int MAX_PLANTS = 500;
+    private final int MAX_PLANTS = 200;
     private final int lengthAddress;
     private final int heightAddress;
-    private static int number_each_species = 4;
+    private static int number_each_species = 1;
     private final int SATIETY_REDUCTION_PERCENTAGE = 100;
 
     public Set<Animal> getAnimals() {
@@ -46,12 +46,7 @@ public class Cell implements Runnable {
     }
 
     private void sendingAnimalsToEat() {
-        Iterator<Animal> iterator = animals.iterator();
-        int an = 0;
-        while (iterator.hasNext()){
-            iterator.next().eat(this);
-            an++;
-        }
+        animals.forEach(animal -> animal.eat(this));
     }
 
     private void resetSatiety() {

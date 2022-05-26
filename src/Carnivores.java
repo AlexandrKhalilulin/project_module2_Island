@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Carnivores extends Animal {
@@ -15,32 +14,29 @@ public abstract class Carnivores extends Animal {
 
     @Override
     public void eat(Cell cell) {
-        //System.out.println("Animal " + this + " going to hunt, satiety is: " + getSatiety());
-        Animal prey = null;
-        Boolean flag = false;
-        while (!flag) {
-            int rand = ThreadLocalRandom.current().nextInt(0, cell.getAnimals().size());
-            Iterator<Animal> iterator = cell.getAnimals().iterator();
-            for (int i = 0; i < rand; i++) {
-                prey =  iterator.next();
+        sendСarnivorousToEat(cell);
+    }
+
+    private void sendСarnivorousToEat(Cell cell) {
+        List<Animal> animals = new ArrayList<>(cell.getAnimals());
+        Collections.shuffle(animals);
+        Animal prey;
+        for (int i = 0; i < getNumberAttemptsToEat(); i++) {
+            prey = animals.stream().filter(s -> mapPreys.keySet().contains(s.getClass())).findAny().get();
+            if (this.hunting(prey)) {
+                cell.getAnimals().remove(prey);
+                this.setSatiety(getSatiety() + prey.getWeight());
+                if (getSatiety() > getSatietyLimit()) setSatiety(getSatietyLimit());
+                //System.out.println("Охота прошла успешно");
             }
-            Class clazz = prey.getClass();
-            if (mapPreys.keySet().contains(clazz)) flag = true;
-        }
-        //System.out.println(this + " find a prey: " + prey);
-        if (this.hunting(prey)) {
-            cell.getAnimals().remove(prey);
-            this.setSatiety(getSatiety() + prey.getWeight());
-            if (getSatiety() > getSatietyLimit()) setSatiety(getSatietyLimit());
-            //System.out.println("Охота прошла успешно");
         }
     }
 
 
     private boolean hunting(Animal prey) {
-        int rand = ThreadLocalRandom.current().nextInt(0, 100);
-        Integer integer = mapPreys.get(prey.getClass());
-        if (rand <= integer) return true;
+        int random = ThreadLocalRandom.current().nextInt(0, 100);
+        Integer huntingSuccessRate = mapPreys.get(prey.getClass());
+        if (random <= huntingSuccessRate) return true;
         return false;
     }
 
