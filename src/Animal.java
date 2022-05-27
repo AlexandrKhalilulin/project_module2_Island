@@ -61,7 +61,7 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
     @Override
     public HashSet<? extends Entity> reproduce() {
         HashSet<Animal> offspringSet = new HashSet<>();
-        int rand = ThreadLocalRandom.current().nextInt(0, 10);
+        int rand = ThreadLocalRandom.current().nextInt(getMinOffspringSize(), getMaxOffspringSize());
         AnimalFactory animalFactory = new AnimalFactory();
         for (int i = 0; i < rand; i++) {
             offspringSet.add(animalFactory.createInstance(this.getClass()));

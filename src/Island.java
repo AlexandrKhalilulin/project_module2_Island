@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Island implements Runnable{
     private static Island INSTANCE;
@@ -26,10 +27,44 @@ public class Island implements Runnable{
     }
 
     public static void print() {
-        for (Cell cell: getSetCells()
-             ) {
-            cell.print();
+        Set<Animal> allAnimals = new HashSet<>();
+        Set<Plant> allPlants = new HashSet<>();
+        for (Cell cell : getSetCells()
+        ) {
+            allPlants.addAll(cell.getPlants());
+            allAnimals.addAll(cell.getAnimals());
         }
+        Set<Animal> wolfs = allAnimals.stream().filter(s -> s instanceof Wolf).collect(Collectors.toSet());
+        Set<Animal> horses = allAnimals.stream().filter(s -> s instanceof Horse).collect(Collectors.toSet());
+        Set<Animal> stags = allAnimals.stream().filter(s -> s instanceof Stag).collect(Collectors.toSet());
+        Set<Animal> rabbits = allAnimals.stream().filter(s -> s instanceof Rabbit).collect(Collectors.toSet());
+
+        System.out.println("Plants: " + allPlants.size() + " --- " + "Wolfs: " + wolfs.size() + " --- " + "Horses: " + horses.size() + " --- " + "Stags: " + stags.size() + " --- " + "Rabbits: " + rabbits.size());
+
+
+        int countAllEntity = allPlants.size() + allAnimals.size();
+        double wolfPercent = (double) wolfs.size() / countAllEntity * 100;
+        for (int i = 0; i < wolfPercent; i++) {
+            System.out.print("\uD83D\uDC3A"); // 🐺
+        }
+        double stagPercent = (double) stags.size() / countAllEntity * 100;
+        for (int i = 0; i < stagPercent; i++) {
+            System.out.print("\uD83E\uDD8C");
+        }
+        double horsePercent = (double) horses.size() / countAllEntity * 100;
+        for (int i = 0; i < horsePercent; i++) {
+            System.out.print("\uD83D\uDC0E");
+        }
+        double rabbitPercent = (double) rabbits.size() / countAllEntity * 100;
+        for (int i = 0; i < rabbitPercent; i++) {
+            System.out.print("\uD83D\uDC07");
+        }
+        double plantPercent = (double) allPlants.size() / countAllEntity * 100;
+        for (int i = 0; i < plantPercent; i++) {
+            System.out.print("\uD83C\uDF3F");
+        }
+        System.out.println();
+
     }
 
     public Cell[][] getMap() {
