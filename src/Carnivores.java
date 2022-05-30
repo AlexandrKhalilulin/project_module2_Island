@@ -1,7 +1,7 @@
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Carnivores extends Animal {
@@ -17,7 +17,8 @@ public abstract class Carnivores extends Animal {
 
     @Override
     public void eat(Cell cell) {
-        List<Animal> animals = new ArrayList<>(cell.getAnimals());
+
+        List<Animal> animals = new CopyOnWriteArrayList<>(cell.getAnimals());
         Collections.shuffle(animals);
         Animal prey;
         for (int i = 0; i < getNumberAttemptsToEat(); i++) {
@@ -44,7 +45,7 @@ public abstract class Carnivores extends Animal {
     public static HashMap<Class, Integer> definePreyMap(String prefix) {
         HashMap<Class, Integer> hashMap;
         SettingsReader settingsReader = new SettingsReader();
-        hashMap = settingsReader.getPreyMap(prefix);
+        hashMap = settingsReader.getMapClassInteger(prefix);
         return hashMap;
     }
 

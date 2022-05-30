@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-
 public class SettingsReader {
     private static final Properties properties = new Properties();
 
@@ -16,7 +15,7 @@ public class SettingsReader {
         return properties.getProperty(key);
     }
 
-    public HashMap<Class, Integer> getPreyMap(String prefix) {
+    public HashMap<Class, Integer> getMapClassInteger(String prefix) {
         InputStream inputStream = this.getClass().getResourceAsStream(prefix.toLowerCase(Locale.ROOT) + "Hunt"  + ".properties");
         try {
             properties.load(inputStream);
@@ -38,4 +37,3 @@ public class SettingsReader {
     }
 
 }
-

@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
 public class Island implements Runnable{
@@ -27,8 +28,8 @@ public class Island implements Runnable{
     }
 
     public static void print() {
-        Set<Animal> allAnimals = new HashSet<>();
-        Set<Plant> allPlants = new HashSet<>();
+        Set<Animal> allAnimals = new CopyOnWriteArraySet<>();
+        Set<Plant> allPlants = new CopyOnWriteArraySet<>();
         for (Cell cell : getSetCells()
         ) {
             allPlants.addAll(cell.getPlants());
@@ -38,15 +39,40 @@ public class Island implements Runnable{
         Set<Animal> horses = allAnimals.stream().filter(s -> s instanceof Horse).collect(Collectors.toSet());
         Set<Animal> stags = allAnimals.stream().filter(s -> s instanceof Stag).collect(Collectors.toSet());
         Set<Animal> rabbits = allAnimals.stream().filter(s -> s instanceof Rabbit).collect(Collectors.toSet());
+        Set<Animal> boas = allAnimals.stream().filter(s -> s instanceof Boa).collect(Collectors.toSet());
+        Set<Animal> foxes = allAnimals.stream().filter(s -> s instanceof Fox).collect(Collectors.toSet());
+        Set<Animal> caterpillars = allAnimals.stream().filter(s -> s instanceof Caterpillar).collect(Collectors.toSet());
+        Set<Animal> eagle = allAnimals.stream().filter(s -> s instanceof Eagle).collect(Collectors.toSet());
+        Set<Animal> mouse = allAnimals.stream().filter(s -> s instanceof Mouse).collect(Collectors.toSet());
 
-        System.out.println("Plants: " + allPlants.size() + " --- " + "Wolfs: " + wolfs.size() + " --- " + "Horses: " + horses.size() + " --- " + "Stags: " + stags.size() + " --- " + "Rabbits: " + rabbits.size());
+        System.out.println("Plant: " + allPlants.size() + " --- " + "Wolf: " + wolfs.size() + " --- " + "Fox: "
+                    + foxes.size() + " --- " + "Boa: " + boas.size() + " --- " + "Eagle: " + eagle.size() + " --- "
+                + "Horse: " + horses.size() + " --- " + "Stag: " + stags.size() + " --- " + "Rabbit: "
+                + rabbits.size() + " --- " + "Mouse: " + mouse.size() + " --- " + "Caterpillar: " + caterpillars.size());
 
 
         int countAllEntity = allPlants.size() + allAnimals.size();
+
         double wolfPercent = (double) wolfs.size() / countAllEntity * 100;
         for (int i = 0; i < wolfPercent; i++) {
             System.out.print("\uD83D\uDC3A"); // 🐺
         }
+
+        double boaPercent = (double) boas.size() / countAllEntity * 100;
+        for (int i = 0; i < boaPercent; i++) {
+            System.out.print("\uD83D\uDC0D"); //
+        }
+
+        double foxPercent = (double) foxes.size() / countAllEntity * 100;
+        for (int i = 0; i < foxPercent; i++) {
+            System.out.print("\uD83E\uDD8A"); //
+        }
+
+        double eaglePercent = (double) eagle.size() / countAllEntity * 100;
+        for (int i = 0; i < eaglePercent; i++) {
+            System.out.print("\uD83E\uDD85"); //
+        }
+
         double stagPercent = (double) stags.size() / countAllEntity * 100;
         for (int i = 0; i < stagPercent; i++) {
             System.out.print("\uD83E\uDD8C");
@@ -59,6 +85,16 @@ public class Island implements Runnable{
         for (int i = 0; i < rabbitPercent; i++) {
             System.out.print("\uD83D\uDC07");
         }
+        double mousePercent = (double) mouse.size() / countAllEntity * 100;
+        for (int i = 0; i < mousePercent; i++) {
+            System.out.print("\uD83D\uDC01");
+        }
+
+        double caterpillarPercent = (double)  caterpillars.size() / countAllEntity * 100;
+        for (int i = 0; i < caterpillarPercent; i++) {
+            System.out.print("\uD83D\uDC1B");
+        }
+
         double plantPercent = (double) allPlants.size() / countAllEntity * 100;
         for (int i = 0; i < plantPercent; i++) {
             System.out.print("\uD83C\uDF3F");
@@ -67,22 +103,14 @@ public class Island implements Runnable{
 
     }
 
-    public Cell[][] getMap() {
-        return map;
-    }
-
-    public void setMap(Cell[][] map) {
-        Island.map = map;
-    }
-
-    public static HashSet<Cell> getSetCells(){
-        HashSet<Cell> cellHashSet = new HashSet<>();
+    public static CopyOnWriteArraySet<Cell> getSetCells(){
+        Set<Cell> cells = new CopyOnWriteArraySet<>();
         for (int i = 0; i < island_length; i++) {
             for (int j = 0; j < island_height; j++) {
-                cellHashSet.add(map[i][j]);
+                cells.add(map[i][j]);
             }
         }
-        return cellHashSet;
+        return (CopyOnWriteArraySet<Cell>) cells;
     }
 
     @Override
@@ -101,6 +129,10 @@ public class Island implements Runnable{
         SettingsIsland settingsIsland = new SettingsIsland();
         island_length = Integer.parseInt(settingsIsland.getValue("Island_Length"));
         island_height = Integer.parseInt(settingsIsland.getValue("Island_Height"));
+    }
+
+    public Cell getCell(int newHeightAddress, int newHeightAddress1) {
+        return null;
     }
 
     private class SettingsIsland {

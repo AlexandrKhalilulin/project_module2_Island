@@ -1,10 +1,12 @@
 import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity implements Eating, Moving, Reproduce {
+    private static final int MOVE_PERCENT = 20;
     private static int MaxOffspringSize;
     private static int MinOffspringSize;
-    private static int LivestockSize;
     private static int TravelSpeed;
     private static double SatietyLimit;
     private static int NumberAttemptsToEat;
@@ -34,14 +36,6 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
         MaxOffspringSize = maxOffspringSize;
     }
 
-    public static int getLivestockSize() {
-        return LivestockSize;
-    }
-
-    public static void setLivestockSize(int livestockSize) {
-        LivestockSize = livestockSize;
-    }
-
     public static int getTravelSpeed() {
         return TravelSpeed;
     }
@@ -59,14 +53,47 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
     }
 
     @Override
-    public HashSet<? extends Entity> reproduce() {
-        HashSet<Animal> offspringSet = new HashSet<>();
+    public Animal move(Cell cell) {
+            int random = ThreadLocalRandom.current().nextInt(0, 100);
+            if (random <= MOVE_PERCENT){
+                Set<String> setDirections = getSetDirections(getTravelSpeed());
+                int newLengthAddress = cell.getLengthAddress();
+                int newHeightAddress = cell.getHeightAddress();
+                for (String s: setDirections
+                     ) {
+                    switch (s){
+                        case "Left": newLengthAddress--;
+                        case "Right": newLengthAddress++;
+                        case "Up": newHeightAddress ++;
+                        case  "Down": newLengthAddress--;
+                    }
+                    cell.getAnimals().remove(this);
+                    }
+            }
+            return this;
+    }
+
+    private Set<String> getSetDirections(int travelSpeed) {
+        Set<String> stringSet =new HashSet<>();
+        for (int i = 0; i < travelSpeed; i++) {
+            int random = ThreadLocalRandom.current().nextInt(0, 4);
+            if (random == 0) stringSet.add("Left");
+            if (random == 1) stringSet.add("Right");
+            if (random == 2) stringSet.add("Up");
+            if (random == 3) stringSet.add("Down");
+        }
+        return stringSet;
+    }
+
+    @Override
+    public CopyOnWriteArraySet<? extends Entity> reproduce() {
+        Set<Animal> offspringSet = new CopyOnWriteArraySet<>();
         int rand = ThreadLocalRandom.current().nextInt(getMinOffspringSize(), getMaxOffspringSize());
         AnimalFactory animalFactory = new AnimalFactory();
         for (int i = 0; i < rand; i++) {
             offspringSet.add(animalFactory.createInstance(this.getClass()));
         }
-        return offspringSet;
+        return (CopyOnWriteArraySet<? extends Entity>) offspringSet;
     }
 
     public double getSatiety() {
@@ -77,11 +104,11 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
         this.satiety = satiety;
     }
 
-    public static void setClassProperties(String name) {
+    public void setClassProperties(String name) {
         SettingsReader settingsReader = new SettingsReader();
         setMaxOffspringSize(Integer.parseInt(settingsReader.getValue(name, "MaxOffspringSize")));
         setMinOffspringSize(Integer.parseInt(settingsReader.getValue(name, "MinOffspringSize")));
-        setLivestockSize(Integer.parseInt(settingsReader.getValue(name, "LivestockSize")));
+
         setTravelSpeed(Integer.parseInt(settingsReader.getValue(name, "TravelSpeed")));
         setSatietyLimit(Double.parseDouble(settingsReader.getValue(name, "SatietyLimit")));
         setNumberAttemptsToEat(Integer.parseInt(settingsReader.getValue(name, "NumberAttemptsToEat")));

@@ -1,14 +1,14 @@
-public class Rabbit extends Herbivores {
+public class Mouse extends Herbivores{
+    public Mouse() {
+        setSatiety(0);
+        setWeight(0.05);
+    }
+
     static {
         setMaxOffspringSize(20);
         setMinOffspringSize(1);
         setNumberAttemptsToEat(1);
-        setSatietyLimit(5);
+        setSatietyLimit(0.001);
         setTravelSpeed(1);
-    }
-
-    public Rabbit() {
-        setWeight(2);
-        setSatiety(0);
     }
 }

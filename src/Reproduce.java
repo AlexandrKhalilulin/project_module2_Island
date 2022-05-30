@@ -1,6 +1,5 @@
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public interface Reproduce {
-    HashSet<? extends Entity> reproduce();
+    CopyOnWriteArraySet<? extends Entity> reproduce();
 }

@@ -1,4 +1,4 @@
-import java.util.HashSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class Plant extends Entity implements Grow, Reproduce{
     private double max_weight = 5;
@@ -16,12 +16,12 @@ public class Plant extends Entity implements Grow, Reproduce{
     }
 
     @Override
-    public HashSet<Plant> reproduce() {
+    public CopyOnWriteArraySet<Plant> reproduce() {
         return makePlants((int) getWeight());
     }
 
-    private HashSet<Plant> makePlants (int value){
-        HashSet<Plant> plants = new HashSet<>();
+    private CopyOnWriteArraySet<Plant> makePlants (int value){
+        CopyOnWriteArraySet<Plant> plants = new CopyOnWriteArraySet<>();
         for (int i = 0; i < value; i++) {
             plants.add(new Plant());
         }

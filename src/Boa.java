@@ -1,14 +1,17 @@
-public class Rabbit extends Herbivores {
+public class Boa extends Carnivores{
     static {
-        setMaxOffspringSize(20);
+        setMaxOffspringSize(2);
         setMinOffspringSize(1);
         setNumberAttemptsToEat(1);
         setSatietyLimit(5);
         setTravelSpeed(1);
+        setMapPreys(definePreyMap(Boa.class.getName()));
     }
 
-    public Rabbit() {
-        setWeight(2);
+
+    public Boa() {
+        setWeight(15);
         setSatiety(0);
     }
+
 }

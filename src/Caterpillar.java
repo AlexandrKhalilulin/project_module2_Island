@@ -1,14 +1,15 @@
-public class Rabbit extends Herbivores {
+public class Caterpillar extends Herbivores{
     static {
-        setMaxOffspringSize(20);
+        setMaxOffspringSize(100);
         setMinOffspringSize(1);
         setNumberAttemptsToEat(1);
         setSatietyLimit(5);
         setTravelSpeed(1);
     }
 
-    public Rabbit() {
-        setWeight(2);
+    public Caterpillar() {
+        setWeight(0.01);
         setSatiety(0);
     }
+
 }

@@ -1,3 +1,3 @@
 public interface Moving {
-    void move();
+    Animal move(Cell cell);
 }

@@ -1,9 +1,13 @@
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
 public class Cell implements Runnable {
-    private Set<Animal> animals = new HashSet<>();
-    private Set<Plant> plants = new HashSet<>();
+    private Set<Animal> animals = new CopyOnWriteArraySet<>();
+    private Set<Plant> plants = new CopyOnWriteArraySet<>();
     private final int MAX_PLANTS = 200;
     private final int lengthAddress;
     private final int heightAddress;
@@ -28,51 +32,24 @@ public class Cell implements Runnable {
         resetSatiety();
         growingUpPlants();
         reproducePlantsInCell();
-        //sendingAnimalsToEat();
-        //reproduceAnimalsInCell();
-
         animalsCycle();
-    }
+        cellCleaner();
+        }
 
     private void animalsCycle() {
         Set<Animal> offspringSet = new HashSet<>();
-
         for (Animal animal: animals
              ) {
-
+            Set<Animal> reproduce = (Set<Animal>) animal.reproduce();
+            offspringSet.addAll(reproduce);
             animal.eat(this);
 
-            HashSet<? extends Entity> reproduce = animal.reproduce();
-            offspringSet.addAll((Collection<? extends Animal>) reproduce);
-
         }
-
         animals.addAll(offspringSet);
-
-    }
-
-    private void reproduceAnimalsInCell() {
-       // Set<Animal> offspringSet = animals.stream().flatMap(animal -> ((Collection<? extends Animal>) animal.reproduce()).stream()).collect(Collectors.toSet());
-        Set<Animal> offspringSet = new HashSet<>();
-        for (Animal animal : animals) {
-            HashSet<? extends Entity> reproduce = animal.reproduce();
-            offspringSet.addAll((Collection<? extends Animal>) reproduce);
-        }
-
-
-        // Set<Animal> offspringSet = animals.stream().peek(Animal::reproduce).collect(Collectors.toSet());
-
-        animals.addAll(offspringSet);
-    }
-
-    private void sendingAnimalsToEat() {
-        System.out.println("start eating");
-        animals.forEach(animal -> animal.eat(this));
-        System.out.println("end eating");
     }
 
     private void resetSatiety() {
-        animals = animals.stream().peek(s -> s.setSatiety(s.getSatiety() - s.getSatiety() / 100 * SATIETY_REDUCTION_PERCENTAGE)).collect(Collectors.toSet());
+        animals.stream().peek(s -> s.setSatiety(s.getSatiety() - s.getSatiety() / 100 * SATIETY_REDUCTION_PERCENTAGE));
     }
 
     private void reproducePlantsInCell() {
@@ -95,6 +72,11 @@ public class Cell implements Runnable {
             animals.add(new Horse());
             animals.add(new Stag());
             animals.add(new Rabbit());
+            animals.add(new Boa());
+            animals.add(new Fox());
+            animals.add(new Caterpillar());
+            animals.add(new Eagle());
+            animals.add(new Mouse());
         }
 
 
@@ -119,4 +101,32 @@ public class Cell implements Runnable {
         HashSet<Animal> rabbits = (HashSet<Animal>) animals.stream().filter(s -> s instanceof Rabbit ).collect(Collectors.toSet());
         System.out.println("Кол-во кроликов в клетке: " + lengthAddress + ":" + heightAddress + " равно " + rabbits.size());
     }
+
+    private void cellCleaner() {
+        Set<Animal> wolfs = animals.stream().filter(s -> s instanceof Wolf).limit(30).collect(Collectors.toSet());
+        Set<Animal> horses = animals.stream().filter(s -> s instanceof Horse).limit(40).collect(Collectors.toSet());
+        Set<Animal> stags = animals.stream().filter(s -> s instanceof Stag).limit(20).collect(Collectors.toSet());
+        Set<Animal> rabbits = animals.stream().filter(s -> s instanceof Rabbit).limit(150).collect(Collectors.toSet());
+        Set<Animal> boas = animals.stream().filter(s -> s instanceof Boa).limit(30).collect(Collectors.toSet());
+        Set<Animal> foxes = animals.stream().filter(s -> s instanceof Fox).limit(30).collect(Collectors.toSet());
+        Set<Animal> caterpillar = animals.stream().filter(s -> s instanceof Caterpillar).limit(1000).collect(Collectors.toSet());
+        Set<Animal> mouse = animals.stream().filter(s -> s instanceof Mouse).limit(500).collect(Collectors.toSet());
+        Set<Animal> eagle = animals.stream().filter(s -> s instanceof Eagle).limit(20).collect(Collectors.toSet());
+
+
+
+        Set<Animal> newSet = new HashSet<>();
+        newSet.addAll(wolfs);
+        newSet.addAll(horses);
+        newSet.addAll(stags);
+        newSet.addAll(rabbits);
+        newSet.addAll(boas);
+        newSet.addAll(foxes);
+        newSet.addAll(caterpillar);
+        newSet.addAll(mouse);
+        newSet.addAll(eagle);
+
+        animals = newSet;
+    }
+
 }

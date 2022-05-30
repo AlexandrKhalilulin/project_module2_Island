@@ -25,18 +25,20 @@ public class IslandSimulation {
             for (Cell cell : Island.getSetCells()
             ) {
                 executorService.submit(cell);
+
             }
             executorService.shutdown();
             step++;
         }
     }
 
-    private class Print implements Runnable{
+    private class Print implements Runnable {
 
         @Override
         public void run() {
             Island.print();
         }
     }
+
 
 }
