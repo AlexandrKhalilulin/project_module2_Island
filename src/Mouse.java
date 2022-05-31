@@ -1,4 +1,4 @@
-public class Mouse extends Herbivores {
+public class Mouse extends Omnivores {
     static {
         setMaxOffspringSize(20);
         setMinOffspringSize(1);
@@ -6,6 +6,7 @@ public class Mouse extends Herbivores {
         setSatietyLimit(0.001);
         setTravelSpeed(1);
         setWeight(0.05);
+        setMapPreys(definePreyMap(Mouse.class.getName()));
     }
 
     public Mouse() {

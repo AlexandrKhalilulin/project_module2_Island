@@ -18,7 +18,7 @@ public class AnimalFactory {
             Map.entry(Boar.class, Boar::new),
             Map.entry(Buffalo.class, Buffalo::new),
             Map.entry(Duck.class, Duck::new)
-    );
+            );
 
     public Animal createInstance(Class clazz) {
         Supplier<Animal> supplier = animals.get(clazz);

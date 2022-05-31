@@ -1,4 +1,4 @@
-public class Boar extends Herbivores{
+public class Boar extends Omnivores{
     static {
         setMaxOffspringSize(3);
         setMinOffspringSize(1);
@@ -6,6 +6,7 @@ public class Boar extends Herbivores{
         setSatietyLimit(50);
         setTravelSpeed(2);
         setWeight(400);
+        setMapPreys(definePreyMap(Boar.class.getName()));
     }
 
     public Boar() {

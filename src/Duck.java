@@ -1,4 +1,4 @@
-public class Duck extends Herbivores{
+public class Duck extends Omnivores{
     static {
         setMaxOffspringSize(10);
         setMinOffspringSize(1);
@@ -6,6 +6,7 @@ public class Duck extends Herbivores{
         setSatietyLimit(0.15);
         setTravelSpeed(4);
         setWeight(4);
+        setMapPreys(definePreyMap(Duck.class.getName()));
     }
 
     public Duck() {

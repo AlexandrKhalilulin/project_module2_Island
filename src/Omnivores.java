@@ -1,30 +1,20 @@
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Carnivores extends Animal {
-    public static HashMap<Class, Integer> mapPreys;
-
-    public static HashMap<Class, Integer> getMapPreys() {
-        return mapPreys;
-    }
-
-    public static void setMapPreys(HashMap<Class, Integer> mapPreys) {
-        Carnivores.mapPreys = mapPreys;
-    }
-
-    public static HashMap<Class, Integer> definePreyMap(String prefix) {
-        HashMap<Class, Integer> hashMap;
-        SettingsReader settingsReader = new SettingsReader();
-        hashMap = settingsReader.getMapClassInteger(prefix + "Hunt");
-        return hashMap;
-    }
-
+public abstract class Omnivores extends Carnivores{
     @Override
     public void eat(Cell cell) {
+        int rand = ThreadLocalRandom.current().nextInt(0, 2);
+        switch (rand){
+            case 0: eatingAnimal(cell);
 
+            case 1: eatingPlant(cell);
+        }
+    }
+
+    private void eatingAnimal(Cell cell) {
         List<Animal> animals = new CopyOnWriteArrayList<>(cell.getAnimals());
         Collections.shuffle(animals);
         Animal prey;
@@ -43,10 +33,16 @@ public abstract class Carnivores extends Animal {
         }
     }
 
-    public boolean hunting(Entity prey) {
-        int random = ThreadLocalRandom.current().nextInt(0, 100);
-        Integer huntingSuccessRate = mapPreys.get(prey.getClass());
-        return random <= huntingSuccessRate;
+    private void eatingPlant(Cell cell) {
+        for (int i = 0; i < getNumberAttemptsToEat(); i++) {
+            Plant plant = cell.getPlants().stream().findAny().get();
+            cell.getPlants().remove(plant);
+            this.setSatiety(getSatiety() + plant.getWeight());
+            if (getSatiety() >= getSatietyLimit()) {
+                setSatiety(getSatietyLimit());
+                break;
+            }
+        }
     }
 
 }

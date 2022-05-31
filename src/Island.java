@@ -94,7 +94,7 @@ public class Island implements Runnable {
 
         double buffaloPercent = (double) buffalo.size() / countAllEntity * 100;
         for (int i = 0; i < buffaloPercent; i++) {
-            System.out.print("\uD83D\uDC03"); //
+            System.out.print("\uD83D\uDC2E"); //
         }
 
         double stagPercent = (double) stags.size() / countAllEntity * 100;
