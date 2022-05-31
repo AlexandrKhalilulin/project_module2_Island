@@ -1,4 +1,4 @@
-public class Boa extends Carnivores{
+public class Boa extends Carnivores {
     static {
         setMaxOffspringSize(2);
         setMinOffspringSize(1);

@@ -1,4 +1,6 @@
 public abstract class Entity {
+    double weight;
+
     public double getWeight() {
         return weight;
     }
@@ -6,6 +8,4 @@ public abstract class Entity {
     public void setWeight(double weight) {
         this.weight = weight;
     }
-
-    double weight;
 }

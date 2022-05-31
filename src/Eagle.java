@@ -1,4 +1,4 @@
-public class Eagle extends Carnivores{
+public class Eagle extends Carnivores {
     static {
         setMaxOffspringSize(2);
         setMinOffspringSize(1);

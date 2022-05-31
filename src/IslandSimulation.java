@@ -22,7 +22,7 @@ public class IslandSimulation {
             System.out.println("Cycle: " + step);
             ExecutorService executorService = Executors.newCachedThreadPool();
             executorService.submit(new Print());
-            for (Cell cell : Island.getSetCells()
+            for (Cell cell : Island.SET_CELLS
             ) {
                 executorService.submit(cell);
 

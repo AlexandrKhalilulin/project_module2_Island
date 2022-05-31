@@ -1,4 +1,4 @@
-public class Caterpillar extends Herbivores{
+public class Caterpillar extends Herbivores {
     static {
         setMaxOffspringSize(100);
         setMinOffspringSize(1);

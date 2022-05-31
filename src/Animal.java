@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ThreadLocalRandom;
@@ -16,16 +17,16 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
         return MinOffspringSize;
     }
 
+    public static void setMinOffspringSize(int minOffspringSize) {
+        MinOffspringSize = minOffspringSize;
+    }
+
     public static int getNumberAttemptsToEat() {
         return NumberAttemptsToEat;
     }
 
     public static void setNumberAttemptsToEat(int numberAttemptsToEat) {
         NumberAttemptsToEat = numberAttemptsToEat;
-    }
-
-    public static void setMinOffspringSize(int minOffspringSize) {
-        MinOffspringSize = minOffspringSize;
     }
 
     public static int getMaxOffspringSize() {
@@ -53,36 +54,54 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
     }
 
     @Override
-    public Animal move(Cell cell) {
-            int random = ThreadLocalRandom.current().nextInt(0, 100);
-            if (random <= MOVE_PERCENT){
-                Set<String> setDirections = getSetDirections(getTravelSpeed());
-                int newLengthAddress = cell.getLengthAddress();
-                int newHeightAddress = cell.getHeightAddress();
-                for (String s: setDirections
-                     ) {
-                    switch (s){
-                        case "Left": newLengthAddress--;
-                        case "Right": newLengthAddress++;
-                        case "Up": newHeightAddress ++;
-                        case  "Down": newLengthAddress--;
-                    }
-                    cell.getAnimals().remove(this);
-                    }
+    public Optional<Cell> move(Cell cell) {
+        Optional<Cell> cellOptional = Optional.empty();
+        int random = ThreadLocalRandom.current().nextInt(0, 100);
+        if (random <= MOVE_PERCENT) {
+            Set<Directions> setDirections = getSetDirections(getTravelSpeed());
+            int newLengthAddress = cell.getLengthAddress();
+            int newHeightAddress = cell.getHeightAddress();
+            for (Directions s : setDirections
+            ) {
+                switch (s) {
+                    case Left:
+                        newLengthAddress--;
+                    case Right:
+                        newLengthAddress++;
+                    case Up:
+                        newHeightAddress++;
+                    case Down:
+                        newLengthAddress--;
+                }
+                if (newLengthAddress == Island.island_length) {
+                    newLengthAddress = 0;
+                }
+                if (newLengthAddress < 0) {
+                    newLengthAddress = Island.island_length -1;
+                }
+                if (newHeightAddress == Island.island_height) {
+                    newHeightAddress = 0;
+                }
+                if (newHeightAddress < 0) {
+                    newHeightAddress = Island.island_height - 1;
+                }
             }
-            return this;
+            cellOptional = Island.getCell(newLengthAddress, newHeightAddress);
+
+        }
+        return cellOptional;
     }
 
-    private Set<String> getSetDirections(int travelSpeed) {
-        Set<String> stringSet =new HashSet<>();
+    private Set<Directions> getSetDirections(int travelSpeed) {
+        Set<Directions> directions = new HashSet<>();
         for (int i = 0; i < travelSpeed; i++) {
             int random = ThreadLocalRandom.current().nextInt(0, 4);
-            if (random == 0) stringSet.add("Left");
-            if (random == 1) stringSet.add("Right");
-            if (random == 2) stringSet.add("Up");
-            if (random == 3) stringSet.add("Down");
+            if (random == 0) directions.add(Directions.Left);
+            if (random == 1) directions.add(Directions.Right);
+            if (random == 2) directions.add(Directions.Up);
+            if (random == 3) directions.add(Directions.Down);
         }
-        return stringSet;
+        return directions;
     }
 
     @Override

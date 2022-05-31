@@ -15,6 +15,13 @@ public abstract class Carnivores extends Animal {
         Carnivores.mapPreys = mapPreys;
     }
 
+    public static HashMap<Class, Integer> definePreyMap(String prefix) {
+        HashMap<Class, Integer> hashMap;
+        SettingsReader settingsReader = new SettingsReader();
+        hashMap = settingsReader.getMapClassInteger(prefix);
+        return hashMap;
+    }
+
     @Override
     public void eat(Cell cell) {
 
@@ -22,7 +29,7 @@ public abstract class Carnivores extends Animal {
         Collections.shuffle(animals);
         Animal prey;
         for (int i = 0; i < getNumberAttemptsToEat(); i++) {
-            prey = animals.stream().filter(s -> mapPreys.keySet().contains(s.getClass())).findAny().get();
+            prey = animals.stream().filter(s -> mapPreys.containsKey(s.getClass())).findAny().get();
             if (this.hunting(prey)) {
                 cell.getAnimals().remove(prey);
                 animals.remove(prey);
@@ -40,13 +47,6 @@ public abstract class Carnivores extends Animal {
         int random = ThreadLocalRandom.current().nextInt(0, 100);
         Integer huntingSuccessRate = mapPreys.get(prey.getClass());
         return random <= huntingSuccessRate;
-    }
-
-    public static HashMap<Class, Integer> definePreyMap(String prefix) {
-        HashMap<Class, Integer> hashMap;
-        SettingsReader settingsReader = new SettingsReader();
-        hashMap = settingsReader.getMapClassInteger(prefix);
-        return hashMap;
     }
 
 }

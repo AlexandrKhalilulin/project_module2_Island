@@ -1,4 +1,4 @@
-public class Fox extends Carnivores{
+public class Fox extends Carnivores {
     static {
         setMaxOffspringSize(2);
         setMinOffspringSize(1);

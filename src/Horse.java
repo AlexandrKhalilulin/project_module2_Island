@@ -7,7 +7,6 @@ public class Horse extends Herbivores {
         setTravelSpeed(1);
     }
 
-
     public Horse() {
         setWeight(400);
         setSatiety(0);

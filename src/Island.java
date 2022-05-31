@@ -1,14 +1,17 @@
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
-public class Island implements Runnable{
+public class Island implements Runnable {
+    public final static CopyOnWriteArraySet<Cell> SET_CELLS = new CopyOnWriteArraySet<>();
     private static Island INSTANCE;
     private static Cell[][] map;
-    private static int island_length;
-    private static int island_height;
+    public static int island_length;
+    public static int island_height;
 
     private Island() {
         loadingSettingsFromProperties();
@@ -16,6 +19,7 @@ public class Island implements Runnable{
         for (int i = 0; i < island_length; i++) {
             for (int j = 0; j < island_height; j++) {
                 map[i][j] = new Cell(i, j);
+                SET_CELLS.add(map[i][j]);
             }
         }
     }
@@ -30,7 +34,7 @@ public class Island implements Runnable{
     public static void print() {
         Set<Animal> allAnimals = new CopyOnWriteArraySet<>();
         Set<Plant> allPlants = new CopyOnWriteArraySet<>();
-        for (Cell cell : getSetCells()
+        for (Cell cell : Island.SET_CELLS
         ) {
             allPlants.addAll(cell.getPlants());
             allAnimals.addAll(cell.getAnimals());
@@ -46,7 +50,7 @@ public class Island implements Runnable{
         Set<Animal> mouse = allAnimals.stream().filter(s -> s instanceof Mouse).collect(Collectors.toSet());
 
         System.out.println("Plant: " + allPlants.size() + " --- " + "Wolf: " + wolfs.size() + " --- " + "Fox: "
-                    + foxes.size() + " --- " + "Boa: " + boas.size() + " --- " + "Eagle: " + eagle.size() + " --- "
+                + foxes.size() + " --- " + "Boa: " + boas.size() + " --- " + "Eagle: " + eagle.size() + " --- "
                 + "Horse: " + horses.size() + " --- " + "Stag: " + stags.size() + " --- " + "Rabbit: "
                 + rabbits.size() + " --- " + "Mouse: " + mouse.size() + " --- " + "Caterpillar: " + caterpillars.size());
 
@@ -90,7 +94,7 @@ public class Island implements Runnable{
             System.out.print("\uD83D\uDC01");
         }
 
-        double caterpillarPercent = (double)  caterpillars.size() / countAllEntity * 100;
+        double caterpillarPercent = (double) caterpillars.size() / countAllEntity * 100;
         for (int i = 0; i < caterpillarPercent; i++) {
             System.out.print("\uD83D\uDC1B");
         }
@@ -103,14 +107,11 @@ public class Island implements Runnable{
 
     }
 
-    public static CopyOnWriteArraySet<Cell> getSetCells(){
-        Set<Cell> cells = new CopyOnWriteArraySet<>();
-        for (int i = 0; i < island_length; i++) {
-            for (int j = 0; j < island_height; j++) {
-                cells.add(map[i][j]);
-            }
+    public static void filling() {
+        for (Cell cell : Island.SET_CELLS
+        ) {
+            cell.fillingCell();
         }
-        return (CopyOnWriteArraySet<Cell>) cells;
     }
 
     @Override
@@ -118,21 +119,10 @@ public class Island implements Runnable{
 
     }
 
-    public static void filling() {
-        for (Cell cell : getSetCells()
-        ) {
-            cell.fillingCell();
-        }
-    }
-
     private void loadingSettingsFromProperties() {
         SettingsIsland settingsIsland = new SettingsIsland();
         island_length = Integer.parseInt(settingsIsland.getValue("Island_Length"));
         island_height = Integer.parseInt(settingsIsland.getValue("Island_Height"));
-    }
-
-    public Cell getCell(int newHeightAddress, int newHeightAddress1) {
-        return null;
     }
 
     private class SettingsIsland {
@@ -148,5 +138,16 @@ public class Island implements Runnable{
             return this.properties.getProperty(key);
         }
     }
+
+    public static Optional<Cell> getCell(int length, int height)
+    {
+        Optional<Cell> optionalCell = Optional.empty();
+        for (Cell cell: Island.SET_CELLS
+             ) {
+            if (cell.getHeightAddress() == height && cell.getLengthAddress() == length) optionalCell = Optional.of(cell);
+        }
+        return optionalCell;
+    }
+
 
 }

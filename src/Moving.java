@@ -1,3 +1,5 @@
+import java.util.Optional;
+
 public interface Moving {
-    Animal move(Cell cell);
+    Optional<Cell> move(Cell cell);
 }
