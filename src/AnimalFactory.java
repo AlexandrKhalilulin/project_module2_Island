@@ -12,8 +12,12 @@ public class AnimalFactory {
             Map.entry(Caterpillar.class, Caterpillar::new),
             Map.entry(Eagle.class, Eagle::new),
             Map.entry(Mouse.class, Mouse::new),
-            Map.entry(Bear.class, Bear::new)
-
+            Map.entry(Bear.class, Bear::new),
+            Map.entry(Goat.class, Goat::new),
+            Map.entry(Sheep.class, Sheep::new),
+            Map.entry(Boar.class, Boar::new),
+            Map.entry(Buffalo.class, Buffalo::new),
+            Map.entry(Duck.class, Duck::new)
     );
 
     public Animal createInstance(Class clazz) {

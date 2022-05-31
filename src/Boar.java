@@ -1,15 +1,14 @@
-public class Stag extends Herbivores {
+public class Boar extends Herbivores{
     static {
-        setMaxOffspringSize(5);
+        setMaxOffspringSize(3);
         setMinOffspringSize(1);
         setNumberAttemptsToEat(1);
         setSatietyLimit(50);
-        setTravelSpeed(1);
-        setWeight(300);
+        setTravelSpeed(2);
+        setWeight(400);
     }
 
-    public Stag() {
+    public Boar() {
         setSatiety(0);
     }
-
 }

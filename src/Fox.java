@@ -5,11 +5,11 @@ public class Fox extends Carnivores {
         setNumberAttemptsToEat(1);
         setSatietyLimit(5);
         setTravelSpeed(1);
+        setWeight(8);
         setMapPreys(definePreyMap(Fox.class.getName()));
     }
 
     public Fox() {
-        setWeight(8);
         setSatiety(0);
     }
 

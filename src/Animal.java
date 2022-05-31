@@ -6,51 +6,51 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity implements Eating, Moving, Reproduce {
     private static final int MOVE_PERCENT = 20;
-    private static int MaxOffspringSize;
-    private static int MinOffspringSize;
-    private static int TravelSpeed;
-    private static double SatietyLimit;
-    private static int NumberAttemptsToEat;
+    private static int maxOffspringSize;
+    private static int minOffspringSize;
+    private static int travelSpeed;
+    private static double satietyLimit;
+    private static int numberAttemptsToEat;
     private double satiety;
 
     public static int getMinOffspringSize() {
-        return MinOffspringSize;
+        return minOffspringSize;
     }
 
     public static void setMinOffspringSize(int minOffspringSize) {
-        MinOffspringSize = minOffspringSize;
+        Animal.minOffspringSize = minOffspringSize;
     }
 
     public static int getNumberAttemptsToEat() {
-        return NumberAttemptsToEat;
+        return numberAttemptsToEat;
     }
 
     public static void setNumberAttemptsToEat(int numberAttemptsToEat) {
-        NumberAttemptsToEat = numberAttemptsToEat;
+        Animal.numberAttemptsToEat = numberAttemptsToEat;
     }
 
     public static int getMaxOffspringSize() {
-        return MaxOffspringSize;
+        return maxOffspringSize;
     }
 
     public static void setMaxOffspringSize(int maxOffspringSize) {
-        MaxOffspringSize = maxOffspringSize;
+        Animal.maxOffspringSize = maxOffspringSize;
     }
 
     public static int getTravelSpeed() {
-        return TravelSpeed;
+        return travelSpeed;
     }
 
     public static void setTravelSpeed(int travelSpeed) {
-        TravelSpeed = travelSpeed;
+        Animal.travelSpeed = travelSpeed;
     }
 
     public static double getSatietyLimit() {
-        return SatietyLimit;
+        return satietyLimit;
     }
 
     public static void setSatietyLimit(double satietyLimit) {
-        SatietyLimit = satietyLimit;
+        Animal.satietyLimit = satietyLimit;
     }
 
     @Override

@@ -5,10 +5,10 @@ public class Mouse extends Herbivores {
         setNumberAttemptsToEat(1);
         setSatietyLimit(0.001);
         setTravelSpeed(1);
+        setWeight(0.05);
     }
 
     public Mouse() {
         setSatiety(0);
-        setWeight(0.05);
     }
 }

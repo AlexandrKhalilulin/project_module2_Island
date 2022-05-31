@@ -1,15 +1,14 @@
-public class Eagle extends Carnivores {
+public class Buffalo extends Herbivores{
     static {
         setMaxOffspringSize(2);
         setMinOffspringSize(1);
         setNumberAttemptsToEat(1);
-        setSatietyLimit(1);
+        setSatietyLimit(100);
         setTravelSpeed(3);
-        setWeight(6);
-        setMapPreys(definePreyMap(Eagle.class.getName()));
+        setWeight(700);
     }
 
-    public Eagle() {
+    public Buffalo() {
         setSatiety(0);
     }
 }

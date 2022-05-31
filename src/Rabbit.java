@@ -5,10 +5,10 @@ public class Rabbit extends Herbivores {
         setNumberAttemptsToEat(1);
         setSatietyLimit(5);
         setTravelSpeed(1);
+        setWeight(2);
     }
 
     public Rabbit() {
-        setWeight(2);
         setSatiety(0);
     }
 }

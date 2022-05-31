@@ -133,7 +133,11 @@ public class Cell implements Runnable {
         Set<Animal> mouse = animals.stream().filter(s -> s instanceof Mouse).limit(500).collect(Collectors.toSet());
         Set<Animal> eagle = animals.stream().filter(s -> s instanceof Eagle).limit(20).collect(Collectors.toSet());
         Set<Animal> bear = animals.stream().filter(s -> s instanceof Bear).limit(5).collect(Collectors.toSet());
-
+        Set<Animal> goat = animals.stream().filter(s -> s instanceof Goat).limit(140).collect(Collectors.toSet());
+        Set<Animal> sheep = animals.stream().filter(s -> s instanceof Sheep).limit(140).collect(Collectors.toSet());
+        Set<Animal> boar = animals.stream().filter(s -> s instanceof Boar).limit(140).collect(Collectors.toSet());
+        Set<Animal> buffalo = animals.stream().filter(s -> s instanceof Buffalo).limit(10).collect(Collectors.toSet());
+        Set<Animal> duck = animals.stream().filter(s -> s instanceof Duck).limit(10).collect(Collectors.toSet());
 
         Set<Animal> newSet = new HashSet<>();
         newSet.addAll(wolfs);
@@ -146,6 +150,11 @@ public class Cell implements Runnable {
         newSet.addAll(mouse);
         newSet.addAll(eagle);
         newSet.addAll(bear);
+        newSet.addAll(goat);
+        newSet.addAll(sheep);
+        newSet.addAll(boar);
+        newSet.addAll(buffalo);
+        newSet.addAll(duck);
 
         animals = newSet;
     }

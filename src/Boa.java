@@ -5,12 +5,12 @@ public class Boa extends Carnivores {
         setNumberAttemptsToEat(1);
         setSatietyLimit(5);
         setTravelSpeed(1);
+        setWeight(15);
         setMapPreys(definePreyMap(Boa.class.getName()));
     }
 
 
     public Boa() {
-        setWeight(15);
         setSatiety(0);
     }
 

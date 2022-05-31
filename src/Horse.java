@@ -3,12 +3,12 @@ public class Horse extends Herbivores {
         setMaxOffspringSize(5);
         setMinOffspringSize(1);
         setNumberAttemptsToEat(1);
-        setSatietyLimit(5);
+        setSatietyLimit(60);
         setTravelSpeed(1);
+        setWeight(400);
     }
 
     public Horse() {
-        setWeight(400);
         setSatiety(0);
     }
 

@@ -5,11 +5,11 @@ public class Bear extends Carnivores {
         setNumberAttemptsToEat(1);
         setSatietyLimit(80);
         setTravelSpeed(2);
+        setWeight(500);
         setMapPreys(definePreyMap(Bear.class.getName()));
     }
 
     public Bear() {
         setSatiety(0);
-        setWeight(500);
     }
 }

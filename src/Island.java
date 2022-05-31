@@ -50,12 +50,18 @@ public class Island implements Runnable {
         Set<Animal> eagle = allAnimals.stream().filter(s -> s instanceof Eagle).collect(Collectors.toSet());
         Set<Animal> mouse = allAnimals.stream().filter(s -> s instanceof Mouse).collect(Collectors.toSet());
         Set<Animal> bear = allAnimals.stream().filter(s -> s instanceof Bear).collect(Collectors.toSet());
-
+        Set<Animal> goat = allAnimals.stream().filter(s -> s instanceof Goat).collect(Collectors.toSet());
+        Set<Animal> sheep = allAnimals.stream().filter(s -> s instanceof Sheep).collect(Collectors.toSet());
+        Set<Animal> boar = allAnimals.stream().filter(s -> s instanceof Boar).collect(Collectors.toSet());
+        Set<Animal> buffalo = allAnimals.stream().filter(s -> s instanceof Buffalo).collect(Collectors.toSet());
+        Set<Animal> duck = allAnimals.stream().filter(s -> s instanceof Duck).collect(Collectors.toSet());
 
         System.out.println("Plant: " + allPlants.size() + " --- " + "Wolf: " + wolfs.size() + " --- " + "Bear: "
                 + bear.size() + " --- " + "Fox: " + foxes.size() + " --- " + "Boa: " + boas.size() + " --- "
-                + "Eagle: " + eagle.size() + " --- " + "Horse: " + horses.size() + " --- " + "Stag: " + stags.size()
-                + " --- " + "Rabbit: " + rabbits.size() + " --- " + "Mouse: " + mouse.size() + " --- "
+                + "Eagle: " + eagle.size() + " --- " + "Buffalo: " + buffalo.size() + " --- " + "Horse: " +
+                horses.size() + " --- " + "Stag: " + stags.size() + " --- " + "Boar: " + boar.size() + " --- "
+                + "Goat: " + goat.size() + " --- " + "Sheep: " + sheep.size() + " --- " + "Rabbit: " + rabbits.size()
+                + " --- " + "Duck: " + duck.size() + " --- " + "Mouse: " + mouse.size() + " --- "
                 + "Caterpillar: " + caterpillars.size());
 
 
@@ -86,6 +92,11 @@ public class Island implements Runnable {
             System.out.print("\uD83E\uDD85"); //
         }
 
+        double buffaloPercent = (double) buffalo.size() / countAllEntity * 100;
+        for (int i = 0; i < buffaloPercent; i++) {
+            System.out.print("\uD83D\uDC03"); //
+        }
+
         double stagPercent = (double) stags.size() / countAllEntity * 100;
         for (int i = 0; i < stagPercent; i++) {
             System.out.print("\uD83E\uDD8C");
@@ -94,9 +105,25 @@ public class Island implements Runnable {
         for (int i = 0; i < horsePercent; i++) {
             System.out.print("\uD83D\uDC0E");
         }
+        double boarPercent = (double) boar.size() / countAllEntity * 100;
+        for (int i = 0; i < boarPercent; i++) {
+            System.out.print("\uD83D\uDC0E");
+        }
+        double goatPercent = (double) goat.size() / countAllEntity * 100;
+        for (int i = 0; i < goatPercent; i++) {
+            System.out.print("\uD83D\uDC10");
+        }
+        double sheepPercent = (double) sheep.size() / countAllEntity * 100;
+        for (int i = 0; i < sheepPercent; i++) {
+            System.out.print("\uD83D\uDC11");
+        }
         double rabbitPercent = (double) rabbits.size() / countAllEntity * 100;
         for (int i = 0; i < rabbitPercent; i++) {
             System.out.print("\uD83D\uDC07");
+        }
+        double duckPercent = (double) duck.size() / countAllEntity * 100;
+        for (int i = 0; i < duckPercent; i++) {
+            System.out.print("\uD83E\uDD86");
         }
         double mousePercent = (double) mouse.size() / countAllEntity * 100;
         for (int i = 0; i < mousePercent; i++) {
