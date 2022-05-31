@@ -168,6 +168,7 @@ public class Island implements Runnable {
         SettingsIsland settingsIsland = new SettingsIsland();
         island_length = Integer.parseInt(settingsIsland.getValue("Island_Length"));
         island_height = Integer.parseInt(settingsIsland.getValue("Island_Height"));
+
     }
 
     private class SettingsIsland {
