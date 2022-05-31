@@ -18,7 +18,7 @@ public abstract class Carnivores extends Animal {
     public static HashMap<Class, Integer> definePreyMap(String prefix) {
         HashMap<Class, Integer> hashMap;
         SettingsReader settingsReader = new SettingsReader();
-        hashMap = settingsReader.getMapClassInteger(prefix);
+        hashMap = settingsReader.getMapClassInteger(prefix + "Hunt");
         return hashMap;
     }
 

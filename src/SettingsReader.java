@@ -16,7 +16,7 @@ public class SettingsReader {
     }
 
     public HashMap<Class, Integer> getMapClassInteger(String prefix) {
-        InputStream inputStream = this.getClass().getResourceAsStream(prefix.toLowerCase(Locale.ROOT) + "Hunt" + ".properties");
+        InputStream inputStream = this.getClass().getResourceAsStream(prefix.toLowerCase(Locale.ROOT) + ".properties");
         try {
             properties.load(inputStream);
         } catch (IOException e) {

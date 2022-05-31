@@ -48,11 +48,14 @@ public class Island implements Runnable {
         Set<Animal> caterpillars = allAnimals.stream().filter(s -> s instanceof Caterpillar).collect(Collectors.toSet());
         Set<Animal> eagle = allAnimals.stream().filter(s -> s instanceof Eagle).collect(Collectors.toSet());
         Set<Animal> mouse = allAnimals.stream().filter(s -> s instanceof Mouse).collect(Collectors.toSet());
+        Set<Animal> bear = allAnimals.stream().filter(s -> s instanceof Bear).collect(Collectors.toSet());
 
-        System.out.println("Plant: " + allPlants.size() + " --- " + "Wolf: " + wolfs.size() + " --- " + "Fox: "
-                + foxes.size() + " --- " + "Boa: " + boas.size() + " --- " + "Eagle: " + eagle.size() + " --- "
-                + "Horse: " + horses.size() + " --- " + "Stag: " + stags.size() + " --- " + "Rabbit: "
-                + rabbits.size() + " --- " + "Mouse: " + mouse.size() + " --- " + "Caterpillar: " + caterpillars.size());
+
+        System.out.println("Plant: " + allPlants.size() + " --- " + "Wolf: " + wolfs.size() + " --- " + "Bear: "
+                + bear.size() + " --- "+ "Fox: " + foxes.size() + " --- " + "Boa: " + boas.size() + " --- "
+                + "Eagle: " + eagle.size() + " --- " + "Horse: " + horses.size() + " --- " + "Stag: " + stags.size()
+                + " --- " + "Rabbit: " + rabbits.size() + " --- " + "Mouse: " + mouse.size() + " --- "
+                + "Caterpillar: " + caterpillars.size());
 
 
         int countAllEntity = allPlants.size() + allAnimals.size();
@@ -60,6 +63,11 @@ public class Island implements Runnable {
         double wolfPercent = (double) wolfs.size() / countAllEntity * 100;
         for (int i = 0; i < wolfPercent; i++) {
             System.out.print("\uD83D\uDC3A"); // 🐺
+        }
+
+        double bearPercent = (double) bear.size() / countAllEntity * 100;
+        for (int i = 0; i < bearPercent; i++) {
+            System.out.print("\uD83D\uDC3B"); // 🐺
         }
 
         double boaPercent = (double) boas.size() / countAllEntity * 100;

@@ -11,7 +11,8 @@ public class AnimalFactory {
             Map.entry(Fox.class, Fox::new),
             Map.entry(Caterpillar.class, Caterpillar::new),
             Map.entry(Eagle.class, Eagle::new),
-            Map.entry(Mouse.class, Mouse::new)
+            Map.entry(Mouse.class, Mouse::new),
+            Map.entry(Bear.class, Bear::new)
 
     );
 

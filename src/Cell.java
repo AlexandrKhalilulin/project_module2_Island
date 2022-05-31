@@ -90,6 +90,9 @@ public class Cell implements Runnable {
         for (int i = 0; i < MAX_PLANTS; i++) {
             plants.add(new Plant());
         }
+        /*
+
+
         for (int i = 0; i < number_each_species; i++) {
             animals.add(new Wolf());
             animals.add(new Horse());
@@ -100,8 +103,17 @@ public class Cell implements Runnable {
             animals.add(new Caterpillar());
             animals.add(new Eagle());
             animals.add(new Mouse());
+            animals.add(new Bear());
         }
+        */
 
+        HashMap<Class, Integer> cellFilling = new SettingsReader().getMapClassInteger("cellFilling");
+        for (Class clazz: cellFilling.keySet()
+             ) {
+            for (int i = 0; i < cellFilling.get(clazz); i++) {
+                animals.add(new AnimalFactory().createInstance(clazz));
+            }
+        }
 
     }
 
@@ -135,6 +147,7 @@ public class Cell implements Runnable {
         Set<Animal> caterpillar = animals.stream().filter(s -> s instanceof Caterpillar).limit(1000).collect(Collectors.toSet());
         Set<Animal> mouse = animals.stream().filter(s -> s instanceof Mouse).limit(500).collect(Collectors.toSet());
         Set<Animal> eagle = animals.stream().filter(s -> s instanceof Eagle).limit(20).collect(Collectors.toSet());
+        Set<Animal> bear = animals.stream().filter(s -> s instanceof Bear).limit(5).collect(Collectors.toSet());
 
 
         Set<Animal> newSet = new HashSet<>();
@@ -147,6 +160,7 @@ public class Cell implements Runnable {
         newSet.addAll(caterpillar);
         newSet.addAll(mouse);
         newSet.addAll(eagle);
+        newSet.addAll(bear);
 
         animals = newSet;
     }
