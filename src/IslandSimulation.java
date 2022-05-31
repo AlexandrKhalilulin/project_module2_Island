@@ -7,36 +7,43 @@ public class IslandSimulation {
     private final int BAR_DURATION = 2000;
     private final int INITIAL_DELAY_START = 0;
     private final int PRINT_STEP = 2000;
-    private int step;
+
 
     public void start() {
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
         scheduledExecutorService.scheduleAtFixedRate(new LifeCycle(), INITIAL_DELAY_START, BAR_DURATION, TimeUnit.MILLISECONDS);
-        // scheduledExecutorService.scheduleAtFixedRate(new Print(), PRINT_STEP, PRINT_STEP, TimeUnit.MILLISECONDS);
+        //scheduledExecutorService.scheduleAtFixedRate(new Print(), PRINT_STEP, PRINT_STEP, TimeUnit.MILLISECONDS);
     }
 
 
     private class LifeCycle implements Runnable {
+        private int step;
+
         @Override
         public void run() {
-            System.out.println("Cycle: " + step);
+            System.out.println("Cycle: " + step + ". Current island size: " + Island.SET_CELLS.size() + " cells");
             ExecutorService executorService = Executors.newCachedThreadPool();
-            executorService.submit(new Print());
             for (Cell cell : Island.SET_CELLS
             ) {
                 executorService.submit(cell);
 
             }
             executorService.shutdown();
+            Island.print();
             step++;
         }
+
+
     }
 
     private class Print implements Runnable {
 
+
         @Override
         public void run() {
+
             Island.print();
+
         }
     }
 

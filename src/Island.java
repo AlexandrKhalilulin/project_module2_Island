@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 
 public class Island implements Runnable {
     public final static CopyOnWriteArraySet<Cell> SET_CELLS = new CopyOnWriteArraySet<>();
-    private static Island INSTANCE;
-    private static Cell[][] map;
     public static int island_length;
     public static int island_height;
+    private static Island INSTANCE;
+    private static Cell[][] map;
 
     private Island() {
         loadingSettingsFromProperties();
@@ -30,6 +30,7 @@ public class Island implements Runnable {
         }
         return INSTANCE;
     }
+
 
     public static void print() {
         Set<Animal> allAnimals = new CopyOnWriteArraySet<>();
@@ -52,7 +53,7 @@ public class Island implements Runnable {
 
 
         System.out.println("Plant: " + allPlants.size() + " --- " + "Wolf: " + wolfs.size() + " --- " + "Bear: "
-                + bear.size() + " --- "+ "Fox: " + foxes.size() + " --- " + "Boa: " + boas.size() + " --- "
+                + bear.size() + " --- " + "Fox: " + foxes.size() + " --- " + "Boa: " + boas.size() + " --- "
                 + "Eagle: " + eagle.size() + " --- " + "Horse: " + horses.size() + " --- " + "Stag: " + stags.size()
                 + " --- " + "Rabbit: " + rabbits.size() + " --- " + "Mouse: " + mouse.size() + " --- "
                 + "Caterpillar: " + caterpillars.size());
@@ -122,9 +123,18 @@ public class Island implements Runnable {
         }
     }
 
+    public static Optional<Cell> getCell(int length, int height) {
+        Optional<Cell> optionalCell = Optional.empty();
+        for (Cell cell : Island.SET_CELLS
+        ) {
+            if (cell.getHeightAddress() == height && cell.getLengthAddress() == length)
+                optionalCell = Optional.of(cell);
+        }
+        return optionalCell;
+    }
+
     @Override
     public void run() {
-
     }
 
     private void loadingSettingsFromProperties() {
@@ -145,16 +155,6 @@ public class Island implements Runnable {
             }
             return this.properties.getProperty(key);
         }
-    }
-
-    public static Optional<Cell> getCell(int length, int height)
-    {
-        Optional<Cell> optionalCell = Optional.empty();
-        for (Cell cell: Island.SET_CELLS
-             ) {
-            if (cell.getHeightAddress() == height && cell.getLengthAddress() == length) optionalCell = Optional.of(cell);
-        }
-        return optionalCell;
     }
 
 

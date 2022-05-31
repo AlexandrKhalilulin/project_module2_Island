@@ -36,8 +36,8 @@ public class Cell implements Runnable {
     private void animalsCycle() {
 
         //eating
-        for (Animal animal: animals
-             ) {
+        for (Animal animal : animals
+        ) {
             animal.eat(this);
         }
 
@@ -64,7 +64,7 @@ public class Cell implements Runnable {
         //reproducing
         Set<Animal> offspringSet = new HashSet<>();
         Iterator<Animal> iterator = animals.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             offspringSet.addAll((Set<Animal>) iterator.next().reproduce());
         }
         animals.addAll(offspringSet);
@@ -90,28 +90,13 @@ public class Cell implements Runnable {
         for (int i = 0; i < MAX_PLANTS; i++) {
             plants.add(new Plant());
         }
-        /*
-
-
-        for (int i = 0; i < number_each_species; i++) {
-            animals.add(new Wolf());
-            animals.add(new Horse());
-            animals.add(new Stag());
-            animals.add(new Rabbit());
-            animals.add(new Boa());
-            animals.add(new Fox());
-            animals.add(new Caterpillar());
-            animals.add(new Eagle());
-            animals.add(new Mouse());
-            animals.add(new Bear());
-        }
-        */
 
         HashMap<Class, Integer> cellFilling = new SettingsReader().getMapClassInteger("cellFilling");
-        for (Class clazz: cellFilling.keySet()
-             ) {
+        AnimalFactory animalFactory = new AnimalFactory();
+        for (Class clazz : cellFilling.keySet()
+        ) {
             for (int i = 0; i < cellFilling.get(clazz); i++) {
-                animals.add(new AnimalFactory().createInstance(clazz));
+                animals.add(animalFactory.createInstance(clazz));
             }
         }
 

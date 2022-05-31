@@ -77,7 +77,7 @@ public abstract class Animal extends Entity implements Eating, Moving, Reproduce
                     newLengthAddress = 0;
                 }
                 if (newLengthAddress < 0) {
-                    newLengthAddress = Island.island_length -1;
+                    newLengthAddress = Island.island_length - 1;
                 }
                 if (newHeightAddress == Island.island_height) {
                     newHeightAddress = 0;

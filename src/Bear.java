@@ -1,4 +1,4 @@
-public class Bear extends Carnivores{
+public class Bear extends Carnivores {
     static {
         setMaxOffspringSize(1);
         setMinOffspringSize(1);
